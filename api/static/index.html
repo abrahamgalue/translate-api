@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API de Traducción - Documentación</title>
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      --background: #000;
+      --foreground: #fff;
+      --muted: #111;
+      --muted-foreground: #888;
+      --border: #333;
+      --card: #111;
+      --card-foreground: #fff;
+      --primary: #fff;
+      --primary-foreground: #000;
+      --secondary: #333;
+      --secondary-foreground: #fff;
+      --accent: #0070f3;
+      --accent-foreground: #fff;
+      --destructive: #ff0000;
+      --destructive-foreground: #fff;
+      --radius: 0.375rem;
+      --code-bg: #111;
+      --code-color: #0070f3;
+    }
+
+    .light {
+      --background: #fff;
+      --foreground: #000;
+      --muted: #f5f5f5;
+      --muted-foreground: #666;
+      --border: #eaeaea;
+      --card: #fff;
+      --card-foreground: #000;
+      --primary: #000;
+      --primary-foreground: #fff;
+      --secondary: #f5f5f5;
+      --secondary-foreground: #000;
+      --accent: #0070f3;
+      --accent-foreground: #fff;
+      --code-bg: #f5f5f5;
+      --code-color: #0070f3;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--background);
+      color: var(--foreground);
+      line-height: 1.6;
+      /* transition: background-color 0.3s ease, color 0.3s ease; */
+      min-height: 100vh;
+    }
+
+    .main-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .theme-toggle {
+      background-color: transparent;
+      border: none;
+      color: var(--foreground);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-top: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      /* transition: border-color 0.3s ease, background-color 0.3s ease; */
+    }
+
+    code {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      background-color: var(--code-bg);
+      color: var(--code-color);
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background-color: var(--code-bg);
+      padding: 1rem;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+      margin: 1rem 0;
+    }
+
+    ul {
+      list-style-position: inside;
+      margin-bottom: 1rem;
+      padding-left: 1rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .request-example {
+      background-color: var(--code-bg);
+      padding: 1rem;
+      border-radius: var(--radius);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+      overflow-x: auto;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding-bottom: 2rem;
+      color: var(--muted-foreground);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      text-align: center;
+    }
+
+    .description {
+      color: var(--muted-foreground);
+      margin-bottom: 1.5rem;
+    }
+
+    .endpoint {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .endpoint-method {
+      background-color: var(--accent);
+      color: var(--accent-foreground);
+      padding: 0.25rem 0.5rem;
+      border-radius: var(--radius);
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+
+    .endpoint-path {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9em;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1.5rem 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <div class="topbar">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <h1>API de Traducción</h1>
+    <p class="description">Esta API permite traducir texto de un idioma a otro utilizando el modelo de IA de Google
+      Gemini.</p>
+
+    <section id="como-usar">
+      <h2>Cómo usar la API</h2>
+      <p>La API tiene un solo endpoint disponible para realizar traducciones entre diferentes idiomas.</p>
+
+      <div class="card">
+        <div class="endpoint">
+          <span class="endpoint-method">GET</span>
+          <span class="endpoint-path">/api/translate</span>
+        </div>
+        <p>Este endpoint traduce un texto dado de un idioma a otro.</p>
+
+        <h3>Parámetros requeridos</h3>
+        <ul>
+          <li><code>text</code>: El texto que deseas traducir.</li>
+          <li><code>from</code>: El idioma de origen (o <code>auto</code> para detectar automáticamente).</li>
+          <li><code>to</code>: El idioma al que deseas traducir.</li>
+        </ul>
+
+        <h3>Ejemplo de solicitud</h3>
+        <div class="request-example">GET /api/translate?text=Hola%20mundo&from=Spanish&to=English</div>
+
+        <h3>Ejemplo de respuesta</h3>
+        <pre>{
+    "translatedText": "Hello world"
+}</pre>
+      </div>
+    </section>
+
+    <section id="errores">
+      <h2>Posibles errores</h2>
+      <p>A continuación se muestran los posibles errores que pueden ocurrir al utilizar la API.</p>
+
+      <div class="card">
+        <h3>Parámetros faltantes</h3>
+        <pre>{
+    "message": "Missing query params in request",
+    "error": true
+}</pre>
+      </div>
+
+      <div class="card">
+        <h3>Error interno del servidor</h3>
+        <pre>{
+    "message": "Internal server error",
+    "error": true
+}</pre>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <p>Si encuentras algún problema o tienes dudas, contacta con el administrador de la API.</p>
+    </section>
+
+    <footer>
+      <p>Translate API © <span id="current-year"></span></p>
+    </footer>
+  </div>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // Check for saved theme preference or use system preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'light') {
+      document.documentElement.classList.add('light');
+      updateThemeIcon(true);
+    }
+
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light');
+      const isLight = document.documentElement.classList.contains('light');
+
+      // Save preference
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+      // Update icon
+      updateThemeIcon(isLight);
+    });
+
+    function updateThemeIcon(isLight) {
+      const themeToggle = document.getElementById('theme-toggle');
+      if (isLight) {
+        themeToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>`;
+      } else {
+        themeToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>`;
+      }
+    }
+  </script>
+</body>
+
+</html>
