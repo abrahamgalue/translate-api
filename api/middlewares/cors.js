@@ -1,11 +1,11 @@
-import cors from 'cors'
+const cors = require('cors')
 
 const ACCEPTED_ORIGINS = [
   'http://localhost:3000',
   'https://google-translate-clone-abrahamgalue.netlify.app/'
 ]
 
-export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => cors({
+const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => cors({
   origin: (origin, callback) => {
     if (acceptedOrigins.indexOf(origin) !== -1) {
       return callback(null, true)
@@ -19,3 +19,5 @@ export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => c
   }
 }
 )
+
+module.exports = { corsMiddleware }

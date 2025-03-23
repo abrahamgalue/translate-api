@@ -2,7 +2,7 @@ const { Router } = require('express')
 const path = require('path')
 const { TranslateController } = require('../controllers/translate')
 
-export function createRouter({ translateModel }) {
+function createRouter({ translateModel }) {
   const translateRouter = Router()
 
   const translateController = new TranslateController({ translateModel })
@@ -12,3 +12,5 @@ export function createRouter({ translateModel }) {
 
   return translateRouter
 }
+
+module.exports = { createRouter }
