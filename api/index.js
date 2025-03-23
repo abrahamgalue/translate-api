@@ -10,6 +10,8 @@ const app = express()
 app.disable('x-powered-by')
 app.use(cors())
 
+app.use(express.static(path.join(__dirname, 'public')))
+
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'static', 'index.html')))
 app.use('/api', createRouter({ translateModel: TranslateModel }))
 app.use((req, res, next) => res.status(404).sendFile(path.join(__dirname, 'static', '404.html')))
