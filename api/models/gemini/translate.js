@@ -1,5 +1,4 @@
-
-const { generateTranslation } = require('../Gemini/config.js')
+const { generateTranslation } = require('./config.js')
 
 class TranslateModel {
   static async translateText({ text, from, to }) {

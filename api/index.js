@@ -4,7 +4,7 @@ const cors = require('cors')
 
 // const { corsMiddleware } = require('./middlewares/cors')
 const { createRouter } = require('./routes/translate')
-const { TranslateModel } = require('./models/Gemini/translate')
+const { TranslateModel } = require('./models/gemini/translate')
 
 const app = express()
 app.disable('x-powered-by')
