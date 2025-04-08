@@ -19,7 +19,6 @@ class TranslateController {
 
       res.json({ translatedText })
     } catch (error) {
-      console.error('Controller error:', error)
       res.status(500).json({ message: 'Internal server error', error: true })
     }
   }
