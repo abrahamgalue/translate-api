@@ -16,4 +16,6 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'static', 'index.ht
 app.use('/api', createRouter({ translateModel: TranslateModel }))
 app.use((req, res, next) => res.status(404).sendFile(path.join(__dirname, 'static', '404.html')))
 
+app.listen(3001, () => console.log('Server ready on port 3001.'))
+
 module.exports = app
